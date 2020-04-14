@@ -1,4 +1,4 @@
-package com.cc.camear.id.recognition;
+package com.cc.test;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+
+import com.cc.camear.id.recognition.IdRecognition;
 
 public class MainActivity extends Activity {
 
