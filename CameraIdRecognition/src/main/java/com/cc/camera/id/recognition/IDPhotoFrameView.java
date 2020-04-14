@@ -1,4 +1,4 @@
-package com.cc.camear.id.recognition;
+package com.cc.camera.id.recognition;
 
 import android.content.Context;
 import android.graphics.Canvas;

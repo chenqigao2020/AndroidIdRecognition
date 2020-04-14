@@ -5,10 +5,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <Button
-        android:id="@+id/startButton"
+        android:id="@+id/portraitButton"
         android:layout_centerVertical="true"
         android:layout_alignParentRight="true"
-        android:text="开始"
+        android:text="识别人像面"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <Button
+        android:id="@+id/nationalEmblemButton"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:text="识别国徽面"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 </LinearLayout>

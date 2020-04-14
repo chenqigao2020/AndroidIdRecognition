@@ -1,4 +1,4 @@
-package com.cc.camear.id.recognition;
+package com.cc.camera.id.recognition;
 
 import android.Manifest;
 import android.app.Activity;
@@ -7,18 +7,15 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.hardware.Camera;
 import android.os.Bundle;
-import android.os.Environment;
 import android.util.Log;
 import android.view.View;
-
-import androidx.annotation.NonNull;
+import android.widget.Toast;
 
 import com.googlecode.tesseract.android.TessBaseAPI;
 
 import java.io.File;
-import java.io.FileOutputStream;
 
-public class IdRecognitionActivity extends Activity {
+public class IdRecognitionPortraitActivity extends Activity {
 
     private String tag = getClass().getSimpleName();
 
@@ -48,7 +45,7 @@ public class IdRecognitionActivity extends Activity {
     }
 
     private void initView(){
-        setContentView(R.layout.id_recognition);
+        setContentView(R.layout.id_recognition_portrait);
         final CameraView cameraView = findViewById(R.id.cameraView);
         final IDPhotoFrameView idPhotoFrameView = findViewById(R.id.idPhotoFrameView);
         cameraView.setOnSizeChangeListener(new CameraView.OnSizeChangeListener() {
@@ -102,6 +99,8 @@ public class IdRecognitionActivity extends Activity {
                                     if (idBitmap == null) {
                                         recognitionError();
                                         return;
+                                    } else {
+                                        new BitmapUtils().save(IdRecognitionPortraitActivity.this, idBitmap, "idPortrait.jpg");
                                     }
 
                                     //裁出身份证号
@@ -122,7 +121,7 @@ public class IdRecognitionActivity extends Activity {
                                         recognitionError();
                                         return;
                                     } else {
-                                        save(idNumberBitmap, "id.jpg");
+                                        new BitmapUtils().save(IdRecognitionPortraitActivity.this, idNumberBitmap, "idNumber.jpg");
                                     }
 
                                     //裁出名字
@@ -143,7 +142,7 @@ public class IdRecognitionActivity extends Activity {
                                         recognitionError();
                                         return;
                                     } else {
-                                        save(idNameBitmap, "name.jpg");
+                                        new BitmapUtils().save(IdRecognitionPortraitActivity.this, idNameBitmap, "idName.jpg");
                                     }
 
                                     idBitmap.recycle();
@@ -153,7 +152,7 @@ public class IdRecognitionActivity extends Activity {
 
                                     FileCopyUtils fileCopyUtils = new FileCopyUtils();
                                     String tessDataFilePath = fileCopyUtils.copyIfNot(
-                                            IdRecognitionActivity.this,
+                                            IdRecognitionPortraitActivity.this,
                                             "tesseract/tessdata/chi_sim.traineddata",
                                             getCacheDir().getAbsolutePath() + "/tesseract/tessdata",
                                             "chi_sim.traineddata",
@@ -205,9 +204,9 @@ public class IdRecognitionActivity extends Activity {
                                             if (isDestroyed()) {
                                                 return;
                                             }
-                                            if (IdRecognition.LISTENER != null) {
-                                                IdRecognition.LISTENER.onResult(finalIdBitmap, finalName, finalIdNumber);
-                                                IdRecognition.LISTENER = null;
+                                            if (IdRecognition.PORTRAIT_LISTENER != null) {
+                                                IdRecognition.PORTRAIT_LISTENER.onResult(finalIdBitmap, finalName, finalIdNumber);
+                                                IdRecognition.PORTRAIT_LISTENER = null;
                                             } else {
                                                 finalIdBitmap.recycle();
                                             }
@@ -227,33 +226,17 @@ public class IdRecognitionActivity extends Activity {
     protected void onDestroy() {
         super.onDestroy();
         progressDialog.dismiss();
-        IdRecognition.LISTENER = null;
+        IdRecognition.PORTRAIT_LISTENER = null;
     }
 
     public void recognitionError(){
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                Toast.makeText(IdRecognitionPortraitActivity.this, "获取失败，请重试", Toast.LENGTH_LONG).show();
                 progressDialog.dismiss();
             }
         });
-    }
-
-    private void save(@NonNull Bitmap bitmap, String name) {
-        FileOutputStream fileOutputStream = null;
-        try {
-            fileOutputStream = new FileOutputStream(getExternalFilesDir(Environment.DIRECTORY_PICTURES) + File.separator + name);
-        } catch (Throwable e) {
-            e.printStackTrace();
-        }
-        if (fileOutputStream != null) {
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fileOutputStream);
-            try {
-                fileOutputStream.close();
-            } catch (Throwable e) {
-                e.printStackTrace();
-            }
-        }
     }
 
 }

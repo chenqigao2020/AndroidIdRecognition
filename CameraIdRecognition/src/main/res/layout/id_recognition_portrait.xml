@@ -2,13 +2,13 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <com.cc.camear.id.recognition.CameraView
+    <com.cc.camera.id.recognition.CameraView
         android:id="@+id/cameraView"
         android:keepScreenOn="true"
         android:layout_centerInParent="true"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
-    <com.cc.camear.id.recognition.IDPhotoFrameView
+    <com.cc.camera.id.recognition.IDPhotoFrameView
         android:id="@+id/idPhotoFrameView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
