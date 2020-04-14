@@ -1,0 +1,13 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.cc.camear.id.recognition" >
+
+    <uses-permission android:name="android.permission.CAMERA"/>
+
+    <application>
+        <activity
+            android:name=".IdRecognitionActivity"
+            android:theme="@style/CameraIdRecognitionAppTheme"
+            android:screenOrientation="landscape"
+            />
+    </application>
+</manifest>

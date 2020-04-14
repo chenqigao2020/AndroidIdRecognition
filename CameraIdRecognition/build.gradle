@@ -1,22 +1,15 @@
-apply plugin: 'com.android.application'
+apply plugin: 'com.android.library'
 
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.2"
 
     defaultConfig {
-        applicationId "com.cc.camear.id.recognition"
         minSdkVersion 23
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
-        android {
-            defaultConfig {
-                ndk {
-                    abiFilter 'armeabi-v7a'
-                }
-            }
-        }
+        consumerProguardFiles 'consumer-rules.pro'
     }
 
     buildTypes {
@@ -30,6 +23,6 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-	implementation 'androidx.annotation:annotation:1.1.0'
-    implementation project(':CameraIdRecognition')
+    implementation 'androidx.annotation:annotation:1.1.0'
+    implementation 'com.rmtheis:tess-two:9.1.0'
 }
